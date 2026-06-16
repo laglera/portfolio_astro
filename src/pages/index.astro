@@ -1,0 +1,314 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Projects from '../components/Projects.astro';
+import Technologies from '../components/Technologies.astro';
+import Education from '../components/Education.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout>
+	<main class="container">
+		<section class="hero-minimalist">
+			<div class="hero-content">
+				<h1 class="title cursor-effect" id="typewriter"></h1>
+				<p class="description">Me dedico al desarrollo de aplicaciones web, buscando siempre un equilibrio entre una interfaz visual fluida e intuitiva y una arquitectura sólida en el servidor. Me especializo en dar forma al frontend cuidando la precisión de los detalles y las interacciones, conectándolo de manera eficiente con las bases de datos y la lógica de negocio.</p>
+				<p class="description">De manera paralela, y motivado por mi interés en los datos, he comenzado a explorar las bases del Big Data. Actualmente me encuentro en una fase inicial de aprendizaje, familiarizándome con Python y SQL para futuros desarrollos.</p>
+				<div class="social-links">
+					<a href="https://github.com/laglera" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub">
+						<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
+							<path d="M9 18c-4.51 2-5-2-7-2"/>
+						</svg>
+					</a>
+					<a href="https://linkedin.com/in/alejandro-laglera-ferrando-a16446348/?skipRedirect=true" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
+						<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+							<rect width="4" height="12" x="2" y="9"/>
+							<circle cx="4" cy="4" r="2"/>
+						</svg>
+					</a>
+				</div>
+			</div>
+			
+			<button id="scroll-arrow" class="scroll-arrow" aria-label="Scroll down">
+				<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+					<path d="m6 9 6 6 6-6"/>
+				</svg>
+			</button>
+		</section>
+        
+	</main>
+	<Projects />
+	<Education />
+	<Technologies />
+	<Contact />
+	<Footer />
+</Layout>
+
+<script>
+	// Typewriter effect
+	function initTypewriter() {
+		const text = "Hola, soy Alejandro Laglera";
+		const element = document.getElementById('typewriter');
+		if (element && element.textContent === '') {
+			let index = 0;
+			function type() {
+				if (index < text.length) {
+					element.textContent += text.charAt(index);
+					index++;
+					setTimeout(type, 75);
+				} else {
+					setTimeout(() => {
+						element.classList.remove('cursor-effect');
+					}, 2000);
+				}
+			}
+			type();
+		}
+	}
+
+	// Scroll down arrow functionality
+	function initScrollArrow() {
+		const scrollArrow = document.getElementById('scroll-arrow');
+		const contentWrapper = document.getElementById('content-wrapper');
+		if (scrollArrow && contentWrapper) {
+			scrollArrow.addEventListener('click', () => {
+				const target = document.querySelector('#proyectos');
+				if (target instanceof HTMLElement) {
+					contentWrapper.scrollTo({
+						top: target.offsetTop,
+						behavior: 'smooth'
+					});
+				}
+			});
+		}
+	}
+
+	// Initialize on page load
+	initTypewriter();
+	initScrollArrow();
+
+	// Support Astro view transitions / page loads
+	document.addEventListener('astro:page-load', () => {
+		initTypewriter();
+		initScrollArrow();
+	});
+</script>
+
+<style>
+	.container {
+		width: 100%;
+		max-width: 1000px;
+		margin: 0 auto;
+		padding: 0 40px;
+	}
+
+	@media (max-width: 600px) {
+		.container {
+			padding: 0 20px;
+		}
+	}
+
+	.hero-minimalist {
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		text-align: center;
+		position: relative;
+	}
+
+	.hero-content {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		z-index: 10;
+		animation: fadeUp 1s ease-out;
+		width: 100%;
+		max-width: 800px;
+	}
+
+	@keyframes fadeUp {
+		from {
+			opacity: 0;
+			transform: translateY(30px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	.badge {
+		display: inline-block;
+		padding: 8px 20px;
+		background: rgba(255, 255, 255, 0.03);
+		backdrop-filter: blur(10px);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 100px;
+		color: rgba(255, 255, 255, 0.8);
+		font-size: 0.85rem;
+		font-weight: 500;
+		letter-spacing: 0.5px;
+		margin-bottom: 32px;
+		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+	}
+
+	.title {
+		font-size: clamp(2rem, 5.8vw, 4.5rem);
+		font-weight: 800;
+		line-height: 1.1;
+		color: var(--text-primary);
+		letter-spacing: -0.03em;
+		margin-bottom: 32px;
+		text-align: center;
+		transition: color 0.4s ease;
+	}
+
+	@media (min-width: 480px) {
+		.title {
+			white-space: nowrap;
+		}
+	}
+
+	.title.cursor-effect::after {
+		content: '|';
+		animation: blink 0.75s step-end infinite;
+		margin-left: 4px;
+		font-weight: 300;
+		color: var(--text-primary);
+	}
+
+	@keyframes blink {
+		from, to { opacity: 0 }
+		50% { opacity: 1 }
+	}
+
+	.description {
+		font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+		color: var(--text-secondary);
+		line-height: 1.75;
+		max-width: 750px;
+		margin-bottom: 20px;
+		text-align: justify;
+		position: relative;
+		z-index: 1;
+		transition: color 0.4s ease;
+	}
+
+
+	.action-buttons {
+		display: flex;
+		gap: 20px;
+	}
+
+	.social-links {
+		display: flex;
+		gap: 24px;
+		margin-top: 16px;
+		margin-bottom: 0px;
+	}
+
+	.social-link {
+		color: var(--social-link-color);
+		transition: color 0.3s ease, filter 0.3s ease, transform 0.3s ease;
+	}
+
+	.social-link:hover {
+		color: var(--social-link-hover);
+		filter: var(--social-link-shadow);
+		transform: translateY(-2px);
+	}
+
+	.btn-primary {
+		padding: 16px 36px;
+		background: white;
+		color: #020617;
+		text-decoration: none;
+		border-radius: 100px;
+		font-weight: 700;
+		font-size: 1rem;
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+	}
+
+	.btn-primary:hover {
+		transform: translateY(-4px) scale(1.02);
+		box-shadow: 0 10px 40px rgba(255, 255, 255, 0.4);
+	}
+
+
+
+	/* Scroll Arrow Indicator */
+	.scroll-arrow {
+		position: absolute;
+		bottom: 32px;
+		left: 50%;
+		transform: translateX(-50%);
+		background: none;
+		border: none;
+		color: var(--scroll-arrow-color);
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 8px;
+		transition: color 0.3s ease, filter 0.3s ease;
+		animation: scrollBounce 2s infinite ease-in-out;
+		z-index: 15;
+	}
+
+	.scroll-arrow:hover {
+		color: var(--scroll-arrow-hover);
+		filter: var(--scroll-arrow-shadow);
+	}
+
+	@keyframes scrollBounce {
+		0%, 100% {
+			transform: translate(-50%, 0);
+		}
+		50% {
+			transform: translate(-50%, 10px);
+		}
+	}
+
+	/* Mobile Responsive Overrides */
+	@media (max-width: 768px) {
+		.hero-minimalist {
+			min-height: 100vh;
+			padding: 80px 0 100px 0;
+			justify-content: flex-start;
+		}
+
+		.hero-content {
+			justify-content: center;
+			flex-grow: 1;
+		}
+
+		.title {
+			font-size: clamp(1.8rem, 8vw, 2.6rem);
+			margin-bottom: 20px;
+			white-space: normal;
+		}
+
+		.description {
+			text-align: center;
+			font-size: 0.98rem;
+			line-height: 1.6;
+			margin-bottom: 16px;
+		}
+
+		.social-links {
+			margin-top: 12px;
+			gap: 20px;
+		}
+
+		.scroll-arrow {
+			bottom: 24px;
+		}
+
+
+	}
+</style>

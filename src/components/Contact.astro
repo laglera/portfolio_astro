@@ -1,0 +1,432 @@
+---
+// Contact.astro
+---
+
+<section id="contacto" class="contact-section">
+  <div class="section-header">
+    <h2 class="section-title">Contacto</h2>
+    <div class="accent-line"></div>
+  </div>
+
+  <div class="contact-grid">
+    <!-- SLEEK PREMIUM FORM -->
+    <form id="contact-form" action="https://api.web3forms.com/submit" method="POST" class="contact-form">
+      <!-- Configuración Web3Forms -->
+      <input type="hidden" name="access_key" value="651c1b03-1b84-49bf-838b-c5dba49a0801" id="web3forms-key" />
+      <input type="hidden" name="subject" value="Nuevo mensaje desde tu Portafolio" />
+      <input type="hidden" name="from_name" value="Portafolio de Alejandro" />
+      <input type="checkbox" name="botcheck" class="hidden" style="display: none;" />
+      <div class="input-group">
+        <label for="name" class="field-label">Nombre completo</label>
+        <input type="text" id="name" name="name" required placeholder="Tu nombre" class="form-input" />
+      </div>
+
+      <div class="input-group">
+        <label for="email" class="field-label">Correo electrónico</label>
+        <input type="email" id="email" name="email" required placeholder="tu@correo.com" class="form-input" />
+      </div>
+
+      <div class="input-group">
+        <label for="message" class="field-label">Tu mensaje</label>
+        <textarea id="message" name="message" required rows="5" placeholder="¿En qué puedo ayudarte?" class="form-textarea"></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn" aria-label="Enviar mensaje">
+        <span class="spinner"></span>
+        <span class="btn-text">Enviar mensaje</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="btn-arrow">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </button>
+
+      <div id="form-status" class="form-status" aria-live="polite"></div>
+    </form>
+  </div>
+</section>
+
+<style>
+  .contact-section {
+    padding: 100px 40px 140px 40px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 10;
+  }
+
+  @media (max-width: 768px) {
+    .contact-section {
+      padding: 80px 20px 100px 20px;
+    }
+  }
+
+  .section-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 72px;
+    text-align: center;
+  }
+
+  .section-title {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+    transition: color 0.4s ease;
+  }
+
+  .accent-line {
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, #1e40af, #3b82f6);
+    border-radius: 2px;
+  }
+
+  /* CONTACT LAYOUT */
+  .contact-grid {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  /* SLEEK PREMIUM GLASS FORM */
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    background: var(--navbar-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--navbar-border);
+    border-radius: 20px;
+    box-shadow: var(--card-shadow);
+    padding: 36px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    max-width: 960px; /* Synchronized with technologies container width */
+  }
+
+  .contact-form:hover {
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  @media (max-width: 1024px) {
+    .contact-form {
+      max-width: 720px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .contact-form {
+      max-width: 540px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .contact-form {
+      padding: 24px 20px;
+      max-width: 320px;
+    }
+  }
+
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .field-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    color: var(--social-link-color);
+  }
+
+  /* SLEEK FORM INPUTS AND TEXTAREA */
+  .form-input,
+  .form-textarea {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.015);
+    border: 1px solid var(--navbar-border);
+    border-radius: 12px;
+    color: #ffffff;
+    padding: 14px 18px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+  }
+
+  .form-input::placeholder,
+  .form-textarea::placeholder {
+    color: var(--social-link-color);
+    opacity: 0.45;
+  }
+
+  .form-input:hover,
+  .form-textarea:hover {
+    background-color: rgba(255, 255, 255, 0.025);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  .form-input:focus,
+  .form-textarea:focus {
+    background-color: rgba(255, 255, 255, 0.035);
+    border-color: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 0 16px rgba(255, 255, 255, 0.04), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  }
+
+  .form-textarea {
+    resize: none;
+  }
+
+  /* PREMIUM OVAL SUBMIT BUTTON */
+  .submit-btn {
+    width: max-content;
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 28px;
+    background: var(--btn-primary-bg);
+    color: var(--btn-primary-text);
+    border: none;
+    border-radius: 100px;
+    font-weight: 700;
+    font-size: 0.92rem;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(255, 255, 255, 0.12);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.3s ease,
+                background-color 0.3s ease;
+  }
+
+  .submit-btn:hover {
+    transform: translateY(-3px);
+    background-color: var(--btn-primary-hover-bg);
+    box-shadow: 0 10px 24px rgba(255, 255, 255, 0.28);
+  }
+
+  .submit-btn:active {
+    transform: translateY(-1px);
+  }
+
+  .btn-arrow {
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .submit-btn:hover .btn-arrow {
+    transform: translateX(4px);
+  }
+
+  @media (max-width: 860px) {
+    .submit-btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  /* LIGHT MODE INTEGRATION OVERRIDES (Adapts seamlessly using layout variables) */
+  :global(.light-theme) .contact-form:hover {
+    background-color: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 10px 25px rgba(120, 113, 108, 0.05);
+  }
+
+  :global(.light-theme) .form-input,
+  :global(.light-theme) .form-textarea {
+    color: #292524;
+    background: rgba(120, 113, 108, 0.01);
+  }
+
+  :global(.light-theme) .form-input:hover,
+  :global(.light-theme) .form-textarea:hover {
+    background-color: rgba(120, 113, 108, 0.02);
+    border-color: rgba(120, 113, 108, 0.18);
+  }
+
+  :global(.light-theme) .form-input:focus,
+  :global(.light-theme) .form-textarea:focus {
+    background-color: rgba(120, 113, 108, 0.03);
+    border-color: rgba(217, 119, 6, 0.35);
+    box-shadow: 0 0 12px rgba(217, 119, 6, 0.04);
+  }
+
+  :global(.light-theme) .submit-btn {
+    box-shadow: 0 4px 16px rgba(120, 113, 108, 0.1);
+  }
+
+  :global(.light-theme) .submit-btn:hover {
+    box-shadow: 0 10px 24px rgba(217, 119, 6, 0.15);
+  }
+
+  /* Loader spinner */
+  .submit-btn.loading {
+    pointer-events: none;
+    opacity: 0.8;
+  }
+  
+  .submit-btn.loading .btn-arrow {
+    display: none;
+  }
+  
+  .submit-btn .spinner {
+    display: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid currentColor;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  
+  .submit-btn.loading .spinner {
+    display: inline-block;
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* Form Status Messaging */
+  .form-status {
+    display: none;
+    font-size: 0.92rem;
+    font-weight: 500;
+    padding: 14px 18px;
+    border-radius: 12px;
+    margin-top: 12px;
+    width: 100%;
+    align-items: center;
+    gap: 10px;
+    animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .form-status.show {
+    display: flex;
+  }
+
+  .form-status.success {
+    background: rgba(16, 185, 129, 0.08);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    color: #10b981;
+  }
+
+  .form-status.error {
+    background: rgba(239, 68, 68, 0.08);
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    color: #ef4444;
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  :global(.light-theme) .form-status.success {
+    background: rgba(16, 185, 129, 0.05);
+    border-color: rgba(16, 185, 129, 0.2);
+    color: #059669;
+  }
+
+  :global(.light-theme) .form-status.error {
+    background: rgba(220, 38, 38, 0.05);
+    border-color: rgba(220, 38, 38, 0.2);
+    color: #dc2626;
+  }
+</style>
+
+<script>
+  function initContactForm() {
+    const form = document.getElementById('contact-form') as HTMLFormElement | null;
+    if (!form) return;
+
+    const statusMessage = document.getElementById('form-status');
+    const submitBtn = form.querySelector('.submit-btn') as HTMLButtonElement | null;
+    const btnText = form.querySelector('.btn-text');
+
+    if (!statusMessage || !submitBtn || !btnText) return;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Control honeypot anti-spam
+      const botcheck = form.querySelector('input[name="botcheck"]') as HTMLInputElement | null;
+      if (botcheck && botcheck.checked) {
+        return;
+      }
+
+      // 1. Estado de carga
+      submitBtn.classList.add('loading');
+      submitBtn.disabled = true;
+      const originalText = btnText.textContent;
+      btnText.textContent = 'Enviando...';
+      
+      // Ocultar mensaje de estado anterior
+      statusMessage.className = 'form-status';
+      statusMessage.innerHTML = '';
+
+      // Obtener datos del formulario
+      const formData = new FormData(form);
+
+      try {
+        const response = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
+
+        const result = await response.json();
+
+        if (response.status === 200 || result.success) {
+          // 2. Éxito
+          statusMessage.className = 'form-status show success';
+          statusMessage.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>¡Mensaje enviado con éxito! Gracias por contactar, te responderé lo antes posible.</span>
+          `;
+          form.reset();
+        } else {
+          // 3. Error devuelto por la API
+          throw new Error(result.message || 'Error en el servidor');
+        }
+      } catch (error) {
+        // 4. Capturar error de red o de API
+        console.error('Error al enviar el formulario:', error);
+        statusMessage.className = 'form-status show error';
+        statusMessage.innerHTML = `
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <span>Error al enviar el mensaje. Por favor, vuelve a intentarlo.</span>
+        `;
+      } finally {
+        // 5. Restaurar estado del botón
+        submitBtn.classList.remove('loading');
+        submitBtn.disabled = false;
+        btnText.textContent = originalText;
+      }
+    });
+  }
+
+  // Ejecutar al cargar la página
+  initContactForm();
+
+  // Compatibilidad con transiciones de página de Astro (Astro View Transitions)
+  document.addEventListener('astro:after-swap', initContactForm);
+</script>

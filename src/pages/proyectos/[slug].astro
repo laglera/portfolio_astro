@@ -1,0 +1,258 @@
+---
+// [slug].astro
+import Layout from '../../layouts/Layout.astro';
+import { projects } from '../../data/projects';
+
+export async function getStaticPaths() {
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project }
+  }));
+}
+
+const { project } = Astro.props;
+---
+
+<Layout title={`${project.title} | Alejandro Laglera`}>
+  <main class="project-detail-container">
+    
+    <!-- Botón de retorno simple -->
+    <div class="navigation-header">
+      <a href="/#proyectos" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15 18-6-6 6-6"/>
+        </svg>
+        <span>Volver a proyectos</span>
+      </a>
+    </div>
+
+    <!-- Cabecera simple -->
+    <header class="project-header">
+      <h1 class="project-title">{project.title}</h1>
+      <div class="project-metadata">
+        <span>{project.role}</span>
+        <span class="meta-dot">&bull;</span>
+        <span>{project.client}</span>
+        <span class="meta-dot">&bull;</span>
+        <span>{project.year}</span>
+      </div>
+    </header>
+
+    <!-- Imagen única del proyecto -->
+    <div class="project-image-container">
+      <img src={project.image} alt={project.title} class="project-image" />
+    </div>
+
+    <!-- Cuerpo de texto explicándolo todo de forma directa -->
+    <article class="project-content">
+      <p class="intro-paragraph">
+        {project.description}
+      </p>
+
+      <h2>Desafío Técnico</h2>
+      <p>
+        {project.challenge}
+      </p>
+
+      <h2>Solución Implementada</h2>
+      <p>
+        {project.solution}
+      </p>
+
+      <h2>Características Principales</h2>
+      <ul>
+        {project.features.map((feature) => (
+          <li>{feature}</li>
+        ))}
+      </ul>
+    </article>
+
+    <!-- Enlaces simples al final -->
+    <div class="project-actions">
+      <a href={project.demo} target="_blank" rel="noopener noreferrer" class="action-btn primary">
+        <span>Ver Demo en Vivo</span>
+      </a>
+      <a href={project.github} target="_blank" rel="noopener noreferrer" class="action-btn secondary">
+        <span>Código en GitHub</span>
+      </a>
+    </div>
+
+  </main>
+</Layout>
+
+<style>
+  .project-detail-container {
+    width: 100%;
+    max-width: 680px; /* Ancho de lectura ideal y simple */
+    margin: 0 auto;
+    padding: 120px 24px 100px 24px;
+    position: relative;
+    z-index: 10;
+  }
+
+  @media (max-width: 768px) {
+    .project-detail-container {
+      padding: 90px 20px 60px 20px;
+    }
+  }
+
+  /* Retorno */
+  .navigation-header {
+    margin-bottom: 32px;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .back-link:hover {
+    color: var(--text-primary);
+  }
+
+  /* Cabecera del proyecto */
+  .project-header {
+    margin-bottom: 36px;
+    text-align: left;
+  }
+
+  .project-title {
+    font-size: clamp(2rem, 5vw, 2.6rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+
+  .project-metadata {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    opacity: 0.8;
+  }
+
+  .meta-dot {
+    color: var(--navbar-border);
+  }
+
+  /* Imagen */
+  .project-image-container {
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--card-border);
+    margin-bottom: 40px;
+    background: var(--card-bg);
+    box-shadow: var(--card-shadow);
+  }
+
+  .project-image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Cuerpo Explicativo */
+  .project-content {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: var(--text-secondary);
+  }
+
+  .intro-paragraph {
+    font-size: 1.15rem;
+    color: var(--text-primary);
+    line-height: 1.6;
+    margin-bottom: 32px;
+    opacity: 0.95;
+  }
+
+  .project-content h2 {
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-top: 36px;
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+  }
+
+  .project-content p {
+    margin-bottom: 20px;
+    opacity: 0.95;
+  }
+
+  .project-content ul {
+    margin-bottom: 24px;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .project-content li {
+    opacity: 0.95;
+  }
+
+  /* Enlaces finales */
+  .project-actions {
+    display: flex;
+    gap: 16px;
+    margin-top: 48px;
+    border-top: 1px solid var(--navbar-border);
+    padding-top: 32px;
+  }
+
+  .action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+
+  .action-btn.primary {
+    background: var(--btn-primary-bg);
+    color: var(--btn-primary-text);
+  }
+
+  .action-btn.primary:hover {
+    background: var(--btn-primary-hover-bg);
+  }
+
+  .action-btn.secondary {
+    background: var(--btn-secondary-bg);
+    color: var(--btn-secondary-text);
+    border: 1px solid var(--btn-secondary-border);
+  }
+
+  .action-btn.secondary:hover {
+    background: var(--btn-secondary-hover-bg);
+    border-color: var(--btn-secondary-hover-border);
+  }
+
+  @media (max-width: 480px) {
+    .project-actions {
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .action-btn {
+      width: 100%;
+    }
+  }
+</style>
+

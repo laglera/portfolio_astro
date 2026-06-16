@@ -1,0 +1,359 @@
+---
+import Navbar from '../components/Navbar.astro';
+---
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Astro Portfolio</title>
+		
+		<script is:inline>
+			(function() {
+				const theme = (() => {
+					if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+						return localStorage.getItem('theme');
+					}
+					if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+						return 'light';
+					}
+					return 'dark';
+				})();
+				
+				if (theme === 'light') {
+					document.documentElement.classList.add('light-theme');
+				} else {
+					document.documentElement.classList.remove('light-theme');
+				}
+			})();
+		</script>
+		
+		<style is:global>
+			:root {
+				--bg-primary: #020617;
+				--bg-background-gradient: radial-gradient(
+					circle at var(--x, 50%) var(--y, 50%),
+					rgba(29, 78, 216, 0.15) 0%,
+					rgba(15, 42, 107, 0.05) 20%,
+					#020617 50%
+				);
+				--glow-color: radial-gradient(
+					circle,
+					rgba(30, 64, 175, 0.25) 0%,
+					rgba(30, 64, 175, 0.05) 40%,
+					transparent 70%
+				);
+				--glow-blend-mode: screen;
+				--noise-opacity: 0.05;
+				--vignette-opacity: 1;
+
+				--text-primary: #ffffff;
+				--text-secondary: #cbd5e1;
+
+				/* Card values */
+				--card-bg: rgba(0, 0, 0, 0.55);
+				--card-border: rgba(255, 255, 255, 0.04);
+				--card-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+				--card-hover-border: rgba(255, 255, 255, 0.15);
+				--card-hover-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(59, 130, 246, 0.15);
+
+				/* Badge/Tag values */
+				--tag-bg: rgba(255, 255, 255, 0.03);
+				--tag-border: rgba(255, 255, 255, 0.06);
+				--tag-text: rgba(255, 255, 255, 0.75);
+				--tag-hover-bg: rgba(59, 130, 246, 0.05);
+				--tag-hover-border: rgba(59, 130, 246, 0.2);
+
+				/* Navbar values */
+				--navbar-bg: rgba(15, 23, 42, 0.4);
+				--navbar-border: rgba(255, 255, 255, 0.08);
+				--navbar-text: rgba(255, 255, 255, 0.7);
+				--navbar-text-hover: #ffffff;
+				--navbar-text-shadow: 0 0 12px rgba(255, 255, 255, 1);
+
+				/* Button values */
+				--btn-primary-bg: #ffffff;
+				--btn-primary-text: #020617;
+				--btn-primary-hover-bg: rgba(255, 255, 255, 0.9);
+				--btn-secondary-bg: rgba(255, 255, 255, 0.03);
+				--btn-secondary-border: rgba(255, 255, 255, 0.08);
+				--btn-secondary-text: #ffffff;
+				--btn-secondary-hover-bg: rgba(255, 255, 255, 0.08);
+				--btn-secondary-hover-border: rgba(255, 255, 255, 0.2);
+
+				/* Social & scroll arrow */
+				--social-link-color: rgba(255, 255, 255, 0.7);
+				--social-link-hover: #ffffff;
+				--social-link-shadow: drop-shadow(0 0 12px rgba(255, 255, 255, 1));
+				--scroll-arrow-color: rgba(255, 255, 255, 0.4);
+				--scroll-arrow-hover: #ffffff;
+				--scroll-arrow-shadow: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
+			}
+
+			.light-theme {
+				--bg-primary: #f5f4f0;
+				--bg-background-gradient: radial-gradient(
+					circle at var(--x, 50%) var(--y, 50%),
+					rgba(245, 158, 11, 0.04) 0%,
+					rgba(120, 113, 108, 0.02) 30%,
+					#f5f4f0 70%
+				);
+				--glow-color: radial-gradient(
+					circle,
+					rgba(217, 119, 6, 0.04) 0%,
+					rgba(120, 113, 108, 0.01) 50%,
+					transparent 80%
+				);
+				--glow-blend-mode: multiply;
+				--noise-opacity: 0.02;
+				--vignette-opacity: 0.08;
+
+				--text-primary: #292524;
+				--text-secondary: #57534e;
+
+				/* Card values */
+				--card-bg: rgba(255, 255, 255, 0.85);
+				--card-border: rgba(120, 113, 108, 0.08);
+				--card-shadow: 0 10px 30px -10px rgba(120, 113, 108, 0.1), 0 1px 3px rgba(120, 113, 108, 0.05);
+				--card-hover-border: rgba(217, 119, 6, 0.25);
+				--card-hover-shadow: 0 20px 40px -15px rgba(217, 119, 6, 0.08), 0 0 20px rgba(217, 119, 6, 0.04);
+
+				/* Badge/Tag values */
+				--tag-bg: rgba(120, 113, 108, 0.05);
+				--tag-border: rgba(120, 113, 108, 0.08);
+				--tag-text: rgba(87, 83, 78, 0.8);
+				--tag-hover-bg: rgba(217, 119, 6, 0.06);
+				--tag-hover-border: rgba(217, 119, 6, 0.2);
+
+				/* Navbar values */
+				--navbar-bg: rgba(255, 255, 255, 0.75);
+				--navbar-border: rgba(120, 113, 108, 0.08);
+				--navbar-text: rgba(87, 83, 78, 0.85);
+				--navbar-text-hover: #292524;
+				--navbar-text-shadow: 0 0 8px rgba(217, 119, 6, 0.15);
+
+				/* Button values */
+				--btn-primary-bg: #292524;
+				--btn-primary-text: #f5f4f0;
+				--btn-primary-hover-bg: #44403c;
+				--btn-secondary-bg: rgba(120, 113, 108, 0.04);
+				--btn-secondary-border: rgba(120, 113, 108, 0.12);
+				--btn-secondary-text: #292524;
+				--btn-secondary-hover-bg: rgba(120, 113, 108, 0.08);
+				--btn-secondary-hover-border: rgba(120, 113, 108, 0.25);
+
+				/* Social & scroll arrow */
+				--social-link-color: rgba(87, 83, 78, 0.7);
+				--social-link-hover: #292524;
+				--social-link-shadow: drop-shadow(0 0 6px rgba(217, 119, 6, 0.25));
+				--scroll-arrow-color: rgba(87, 83, 78, 0.5);
+				--scroll-arrow-hover: #292524;
+				--scroll-arrow-shadow: drop-shadow(0 0 6px rgba(217, 119, 6, 0.2));
+			}
+
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			html,
+			body {
+				margin: 0;
+				width: 100%;
+				height: 100%;
+				overflow: hidden;
+				background: var(--bg-primary);
+				color: var(--text-primary);
+				transition: background 0.4s ease, color 0.4s ease;
+				font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+			}
+
+			/* BACKGROUND */
+			.background {
+				position: fixed;
+				inset: 0;
+				background: var(--bg-background-gradient);
+				overflow: hidden;
+				z-index: 0;
+				transition: background 0.4s ease;
+			}
+
+			/* GLOW QUE SIGUE AL CURSOR */
+			.glow {
+				position: fixed;
+				width: 800px;
+				height: 800px;
+				border-radius: 100%;
+				background: var(--glow-color);
+				filter: blur(80px);
+				transform: translate(-50%, -50%);
+				pointer-events: none;
+				mix-blend-mode: var(--glow-blend-mode);
+				z-index: 2;
+				transition: background 0.4s ease;
+			}
+
+			/* NOISE */
+			.noise {
+				position: fixed;
+				inset: 0;
+				background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+				opacity: var(--noise-opacity);
+				mix-blend-mode: soft-light;
+				pointer-events: none;
+				z-index: 3;
+				transition: opacity 0.4s ease;
+			}
+
+			/* VIÑETA */
+			.vignette {
+				position: fixed;
+				inset: 0;
+				background: radial-gradient(circle, transparent 40%, rgba(0, 0, 0, 0.35) 100%);
+				opacity: var(--vignette-opacity);
+				pointer-events: none;
+				z-index: 4;
+				transition: opacity 0.4s ease;
+			}
+
+			/* Botón de alternancia de tema */
+			.theme-toggle {
+				position: fixed;
+				top: 24px;
+				right: 24px;
+				width: 44px;
+				height: 44px;
+				border-radius: 50%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				cursor: pointer;
+				z-index: 150;
+				border: 1px solid var(--navbar-border);
+				background: var(--navbar-bg);
+				color: var(--text-primary);
+				backdrop-filter: blur(16px);
+				-webkit-backdrop-filter: blur(16px);
+				box-shadow: var(--card-shadow);
+				transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+			}
+
+			.theme-toggle:hover {
+				transform: scale(1.05);
+				border-color: var(--card-hover-border);
+				box-shadow: var(--card-hover-shadow);
+				color: var(--navbar-text-hover);
+			}
+
+			.theme-toggle:active {
+				transform: scale(0.95);
+			}
+
+			.theme-toggle .sun-icon {
+				display: block;
+			}
+
+			.theme-toggle .moon-icon {
+				display: none;
+			}
+
+			.light-theme .theme-toggle .sun-icon {
+				display: none;
+			}
+
+			.light-theme .theme-toggle .moon-icon {
+				display: block;
+			}
+
+			/* Contenedor del contenido principal */
+			#content-wrapper {
+				position: relative;
+				z-index: 10;
+				height: 100%;
+				overflow-y: auto;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="background"></div>
+		<div class="glow"></div>
+		<div class="noise"></div>
+		<div class="vignette"></div>
+
+		<button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">
+			<!-- Sun icon (visible in dark mode) -->
+			<svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<circle cx="12" cy="12" r="4"/>
+				<path d="M12 2v2"/>
+				<path d="M12 20v2"/>
+				<path d="m4.93 4.93 1.41 1.41"/>
+				<path d="m17.66 17.66 1.41 1.41"/>
+				<path d="M2 12h2"/>
+				<path d="M20 12h2"/>
+				<path d="m6.34 17.66-1.41 1.41"/>
+				<path d="m19.07 4.93-1.41 1.41"/>
+			</svg>
+			<!-- Moon icon (visible in light mode) -->
+			<svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+			</svg>
+		</button>
+		
+		<div id="content-wrapper">
+			<Navbar />
+			<slot />
+		</div>
+
+		<script>
+			const glow = document.querySelector(".glow");
+			const background = document.querySelector(".background");
+
+			let mouseX = window.innerWidth / 2;
+			let mouseY = window.innerHeight / 2;
+
+			let currentX = mouseX;
+			let currentY = mouseY;
+
+			window.addEventListener("mousemove", (e) => {
+				mouseX = e.clientX;
+				mouseY = e.clientY;
+			});
+
+			function animate() {
+				currentX += (mouseX - currentX) * 0.06;
+				currentY += (mouseY - currentY) * 0.06;
+
+				if (background) {
+					background.style.setProperty("--x", `${currentX}px`);
+					background.style.setProperty("--y", `${currentY}px`);
+				}
+				if (glow) {
+					glow.style.left = `${currentX}px`;
+					glow.style.top = `${currentY}px`;
+				}
+
+				requestAnimationFrame(animate);
+			}
+
+			animate();
+
+			// Theme Toggle Logic
+			function initThemeToggle() {
+				const toggle = document.getElementById('theme-toggle');
+				if (toggle) {
+					toggle.addEventListener('click', () => {
+						const isLight = document.documentElement.classList.toggle('light-theme');
+						localStorage.setItem('theme', isLight ? 'light' : 'dark');
+					});
+				}
+			}
+
+			initThemeToggle();
+			document.addEventListener('astro:page-load', initThemeToggle);
+		</script>
+	</body>
+</html>

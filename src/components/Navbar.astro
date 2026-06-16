@@ -1,0 +1,326 @@
+---
+const links = [
+  { name: 'Inicio', href: '/' },
+  { name: 'Proyectos', href: '#proyectos' },
+  { name: 'Formación', href: '#formacion' },
+  { name: 'Tecnologías', href: '#tecnologias' },
+  { name: 'Contacto', href: '#contacto' },
+];
+---
+
+<header class="navbar-wrapper">
+  <nav class="navbar">
+    <button class="mobile-toggle" aria-label="Abrir menú" aria-expanded="false">
+      <span class="hamburger-line line-top"></span>
+      <span class="hamburger-line line-middle"></span>
+      <span class="hamburger-line line-bottom"></span>
+    </button>
+    
+    <ul class="nav-links">
+      {links.map((link) => (
+        <li>
+          <a href={link.href}>{link.name}</a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</header>
+
+<style>
+  .navbar-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 24px 20px;
+    z-index: 100;
+    pointer-events: none; /* Allows clicks to pass through empty space */
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .navbar-wrapper.hidden {
+    transform: translateY(-100%);
+  }
+
+  .navbar {
+    pointer-events: auto; /* Re-enable clicks for the actual navbar */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: max-content;
+    min-height: 60px;
+    padding: 12px 32px;
+    
+    /* Premium Glassmorphism */
+    background: var(--navbar-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--navbar-border);
+    box-shadow: var(--card-shadow);
+    border-radius: 100px; /* Pill shape */
+    transition: background 0.4s ease, 
+                border-color 0.4s ease, 
+                box-shadow 0.4s ease, 
+                width 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                height 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                border-radius 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                padding 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Mobile Toggle Button */
+  .mobile-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    width: 44px;
+    height: 44px;
+    position: relative;
+    z-index: 110;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+    outline: none;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+  }
+
+  .mobile-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+
+  :global(.light-theme) .mobile-toggle:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+  }
+
+  .hamburger-line {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background-color: var(--navbar-text);
+    border-radius: 2px;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.3s ease,
+                background-color 0.3s ease;
+  }
+
+  /* Morph hamburger lines to X */
+  .navbar.menu-open .line-top {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .navbar.menu-open .line-middle {
+    opacity: 0;
+  }
+
+  .navbar.menu-open .line-bottom {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* Links */
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-links a {
+    color: var(--navbar-text);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+  }
+
+  .nav-links a:hover {
+    color: var(--navbar-text-hover);
+    text-shadow: var(--navbar-text-shadow);
+  }
+
+  /* Responsive (Mobile Navigation Morphing) */
+  @media (max-width: 768px) {
+    .navbar-wrapper {
+      padding: 16px;
+    }
+
+    .mobile-toggle {
+      display: flex;
+    }
+
+    .navbar {
+      width: 56px; /* Perfect round circle for hamburger button */
+      height: 56px;
+      min-height: 56px;
+      padding: 0;
+      border-radius: 50%; /* Circle shape when closed */
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative; /* Position context for absolute links */
+    }
+
+    /* Expand pill into a vertical menu card */
+    .navbar.menu-open {
+      width: calc(100vw - 32px);
+      max-width: 280px;
+      height: 290px;
+      border-radius: 24px;
+      padding: 12px 16px 20px 16px;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-10px);
+      transition: opacity 0.3s ease,
+                  transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      position: absolute; /* Remove from flow to prevent off-centering when closed */
+      top: 64px;
+      left: 0;
+      right: 0;
+      padding: 0 16px;
+    }
+
+    .navbar.menu-open .nav-links {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+      transition-delay: 0.12s; /* Reveals smoothly as card opens */
+    }
+
+    .nav-links li {
+      width: 100%;
+      text-align: center;
+    }
+
+    .nav-links a {
+      display: block;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 8px 12px;
+      border-radius: 100px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+      text-shadow: none;
+    }
+
+    :global(.light-theme) .nav-links a:hover {
+      background-color: rgba(0, 0, 0, 0.03);
+    }
+  }
+</style>
+
+<script>
+  function initNavbar() {
+    const wrapper = document.querySelector('.navbar-wrapper') as HTMLElement | null;
+    const contentWrapper = document.getElementById('content-wrapper');
+    const navbar = document.querySelector('.navbar') as HTMLElement | null;
+    const toggleBtn = document.querySelector('.mobile-toggle') as HTMLButtonElement | null;
+
+    if (!wrapper || !contentWrapper || !navbar || !toggleBtn) return;
+
+    // Toggle menu state
+    const toggleMenu = (forceClose?: boolean) => {
+      const isOpen = navbar.classList.contains('menu-open');
+      const shouldOpen = forceClose === undefined ? !isOpen : !forceClose;
+
+      if (shouldOpen) {
+        navbar.classList.add('menu-open');
+        toggleBtn.setAttribute('aria-expanded', 'true');
+        toggleBtn.setAttribute('aria-label', 'Cerrar menú');
+      } else {
+        navbar.classList.remove('menu-open');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+        toggleBtn.setAttribute('aria-label', 'Abrir menú');
+      }
+    };
+
+    toggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleMenu();
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (navbar.classList.contains('menu-open') && !navbar.contains(e.target as Node)) {
+        toggleMenu(true);
+      }
+    });
+
+    let lastScrollY = contentWrapper.scrollTop;
+    let isScrollingDown = false;
+    
+    // Scroll listener on main container
+    contentWrapper.addEventListener('scroll', () => {
+      const currentScroll = contentWrapper.scrollTop;
+      
+      // Close menu if user scrolls
+      if (navbar.classList.contains('menu-open') && Math.abs(currentScroll - lastScrollY) > 10) {
+        toggleMenu(true);
+      }
+
+      isScrollingDown = currentScroll > lastScrollY;
+      lastScrollY = currentScroll;
+      
+      // Hide navbar wrapper on scroll down, but only if menu is NOT open
+      if (isScrollingDown && currentScroll > 50 && !navbar.classList.contains('menu-open')) {
+        wrapper.classList.add('hidden');
+      } else {
+        wrapper.classList.remove('hidden');
+      }
+    });
+
+    // Show if mouse moves to the top edge (desktop)
+    window.addEventListener('mousemove', (e) => {
+      if (e.clientY < 90) {
+        wrapper.classList.remove('hidden');
+      } else if (isScrollingDown && contentWrapper.scrollTop > 50 && !navbar.classList.contains('menu-open')) {
+        wrapper.classList.add('hidden');
+      }
+    });
+
+    // Intercept clicks on links for smooth scroll and close menu
+    const anchorLinks = wrapper.querySelectorAll('a[href^="#"]');
+    anchorLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href');
+        if (!targetId || targetId === '#') return;
+        
+        const targetElement = document.querySelector(targetId);
+        if (targetElement instanceof HTMLElement) {
+          // Collapse menu first
+          toggleMenu(true);
+
+          contentWrapper.scrollTo({
+            top: targetElement.offsetTop,
+            behavior: 'smooth'
+          });
+          // Update URL hash cleanly
+          history.pushState(null, '', targetId);
+        }
+      });
+    });
+  }
+
+  // Init on load and support Astro View Transitions page swaps
+  initNavbar();
+  document.addEventListener('astro:page-load', initNavbar);
+</script>
