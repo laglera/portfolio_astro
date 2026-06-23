@@ -11,6 +11,8 @@ export async function getStaticPaths() {
 }
 
 const { project } = Astro.props;
+
+const metadata = [project.role, project.client, project.year].filter(Boolean);
 ---
 
 <Layout title={`${project.title} | Alejandro Laglera`}>
@@ -30,11 +32,12 @@ const { project } = Astro.props;
     <header class="project-header">
       <h1 class="project-title">{project.title}</h1>
       <div class="project-metadata">
-        <span>{project.role}</span>
-        <span class="meta-dot">&bull;</span>
-        <span>{project.client}</span>
-        <span class="meta-dot">&bull;</span>
-        <span>{project.year}</span>
+        {metadata.map((item, index) => (
+          <>
+            <span>{item}</span>
+            {index < metadata.length - 1 && <span class="meta-dot"> &ndash; </span>}
+          </>
+        ))}
       </div>
     </header>
 
@@ -69,9 +72,11 @@ const { project } = Astro.props;
 
     <!-- Enlaces simples al final -->
     <div class="project-actions">
-      <a href={project.demo} target="_blank" rel="noopener noreferrer" class="action-btn primary">
-        <span>Ver Demo en Vivo</span>
-      </a>
+      {project.demo && (
+        <a href={project.demo} target="_blank" rel="noopener noreferrer" class="action-btn primary">
+          <span>Ver Demo en Vivo</span>
+        </a>
+      )}
       <a href={project.github} target="_blank" rel="noopener noreferrer" class="action-btn secondary">
         <span>Código en GitHub</span>
       </a>
